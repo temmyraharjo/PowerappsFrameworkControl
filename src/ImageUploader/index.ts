@@ -5,7 +5,7 @@ export class ImageUploader implements ComponentFramework.StandardControl<IInputs
 	private _buttonUploadElement: HTMLElement;
 	private _imageElement: HTMLElement;
 
-	private _content: string;
+	private _content: string | undefined;
 	private _notifyOutputChanged: () => void;
 	private _container: HTMLDivElement;
 
@@ -24,28 +24,41 @@ export class ImageUploader implements ComponentFramework.StandardControl<IInputs
 		this.createComponent(context);
 	}
 
+	private refreshImage(): void {
+		this._imageElement.setAttribute('src', this._content || '');
+		this._imageElement.removeAttribute('style');
+
+		this._imageElement.setAttribute('style', 'max-width: 400px;');
+		if(!this._content) {
+			this._imageElement.setAttribute('style', 'display:none');
+		}
+
+		this._fileUploaderElement.setAttribute('value', '');
+		this._fileUploaderElement.files = null;
+	}
+
 	private onSubmit(): void {
-		let files = this._fileUploaderElement.files;
+		const files = this._fileUploaderElement.files;
 		const valid = files!.length > 0;
 		if(!valid) {
 			alert('File not found!');
 			return;
 		}
-		const $this = this;
 		const file = files![0];
 		const reader = new FileReader();
 		reader.readAsDataURL(file);
-
+		
+		const $this = this;
 		reader.onload = function() {
 			$this._content = <string>reader.result;
-			$this._imageElement.setAttribute('src', $this._content);
-			$this._fileUploaderElement.setAttribute('value', '');
-			$this._fileUploaderElement.files = null;
-			$this._notifyOutputChanged();
 		};
+
 		reader.onerror = function() {
 			alert('Error occured!');
 		}
+
+		this.refreshImage();
+		this._notifyOutputChanged();
 	}
 
 	private createComponent(context: ComponentFramework.Context<IInputs>) {
@@ -61,25 +74,24 @@ export class ImageUploader implements ComponentFramework.StandardControl<IInputs
 		this._buttonUploadElement.setAttribute('value', 'Save');
 		this._buttonUploadElement.addEventListener('click', this._submitClick);
 
+		this._content = context.parameters.imageBase64String.raw || undefined;
+
 		this._imageElement = document.createElement('img');
-		this._imageElement.setAttribute('style', 'max-width: 400px;');
-		
-		const imageSrc = context.parameters.imageBase64String.raw;
-		if(!imageSrc) {
-			this._imageElement.setAttribute('style', 'display:none');
-		} else {
-			this._imageElement.setAttribute('src', imageSrc);
-		}
 
 		this._container.appendChild(this._fileUploaderElement);
 		this._container.appendChild(this._buttonUploadElement);
 		this._container.appendChild(document.createElement('br'));
 		this._container.appendChild(this._imageElement);
+
+		this.refreshImage();
 	}
 
 	public updateView(context: ComponentFramework.Context<IInputs>): void
 	{
-		context.parameters.imageBase64String.raw = this._content;
+		const value = context.parameters.imageBase64String.raw;
+		this._content = value != null ? value : undefined;
+
+		this.refreshImage();
 	}
 
 	public getOutputs(): IOutputs
