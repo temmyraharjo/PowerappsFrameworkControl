@@ -8,8 +8,8 @@
   <Import Project="$(PowerAppsTargetsPath)\Microsoft.PowerApps.VisualStudio.Pcf.props" Condition="Exists('$(PowerAppsTargetsPath)\Microsoft.PowerApps.VisualStudio.Pcf.props')"/>
   
   <PropertyGroup>
-    <Name>Fx</Name>
-    <ProjectGuid>8f0a1cb5-343b-46d5-af30-868e88f23716</ProjectGuid>
+    <Name>SmileyRating</Name>
+    <ProjectGuid>25702057-79e8-49e9-a90d-8a95fa6df2f5</ProjectGuid>
     <OutputPath>$(MSBuildThisFileDirectory)out\controls</OutputPath>
   </PropertyGroup>
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="Fx" constructor="SmileyRating" version="0.0.4" 
+  display-name-key="Smiley Rating" 
+  description-key="Smiley Rating Control" control-type="standard">
+    <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
+    <property name="value" display-name-key="value_display_key" description-key="value_description_key" 
+      of-type="OptionSet" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1"/>
+      <css path="css/styles.css" order="2" />
+      <img path="img/happy-selected.png" />
+      <img path="img/happy-unselect.png" />
+      <img path="img/neutral-selected.png" />
+      <img path="img/neutral-unselect.png" />
+      <img path="img/sad-selected.png" />
+      <img path="img/sad-unselect.png" />
+    </resources>
+  </control>
+</manifest>
