@@ -1,0 +1,28 @@
+{
+    "name": "pcf-project",
+    "version": "1.0.0",
+    "description": "Project containing your PowerApps Component Framework (PCF) control.",
+    "scripts": {
+        "build": "pcf-scripts build",
+        "clean": "pcf-scripts clean",
+        "rebuild": "pcf-scripts rebuild",
+        "start": "pcf-scripts start",
+        "test": "mocha -r ts-node/register './setup-test.ts' 'ImageFromString/**/*.spec.ts'"
+    },
+    "dependencies": {
+        "@types/node": "^10.12.18",
+        "@types/powerapps-component-framework": "^1.2.0"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.2.14",
+        "@types/jsdom": "^16.2.5",
+        "@types/mocha": "^8.0.4",
+        "chai": "^4.2.0",
+        "jsdom": "^16.4.0",
+        "mocha": "^8.2.1",
+        "pcf-scripts": "^1",
+        "pcf-start": "^1",
+        "ts-node": "^9.0.0",
+        "typescript": "^4.0.5"
+    }
+}

@@ -1,0 +1,7 @@
+.image-uploader {
+    opacity: unset !important;
+    position: relative !important;
+    pointer-events: all !important;
+    width: 100% !important;
+    height: 25px !important;
+}
