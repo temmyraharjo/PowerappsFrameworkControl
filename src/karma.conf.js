@@ -12,9 +12,18 @@ module.exports = function (config) {
         },
         logLevel: config.LOG_INFO,
         autoWatch: false,
-        reporters: ["progress", "karma-typescript"],
-        browsers: ["FirefoxHeadless"],
+        reporters: ["karma-typescript", "progress"],
+        browsers: ["FirefoxHeadless", "ChromeDebugging"],
         customLaunchers: {
+            'ChromeDebugging': {
+                base: 'Chrome',
+                flags: [
+                    '--remote-debugging-port=9222',
+                    '--inspect',
+                    '--single-run:false'
+                ],
+                debug: true
+            },
             'FirefoxHeadless': {
                 base: 'Firefox',
                 flags: [
@@ -25,7 +34,6 @@ module.exports = function (config) {
                 }
             },
         },
-        concurrecy: Infinity,
-        singleRun: true
+        concurrecy: Infinity
     });
 };
