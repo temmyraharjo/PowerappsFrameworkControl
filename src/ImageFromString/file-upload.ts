@@ -84,7 +84,7 @@ export class fileUpload {
     this.convertToBase64(file as Blob).then(success => this.successFn(success));
   }
 
-  convertToBase64(file: any): Promise<string | ArrayBuffer> {
+  convertToBase64(file: Blob): Promise<string | ArrayBuffer> {
     const fileReader = new FileReader();
     return new Promise((resolve, reject) => {
       fileReader.onerror = () => {

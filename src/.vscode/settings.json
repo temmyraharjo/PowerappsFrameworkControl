@@ -1,7 +1,0 @@
-{
-    "mochaExplorer.require": "ts-node/register",
-    "mochaExplorer.files": "**/*.spec.ts",
-    "mochaExplorer.logpanel": true,
-    "mochaExplorer.ui": "bdd",
-    "debug.javascript.suggestPrettyPrinting": false,
-}

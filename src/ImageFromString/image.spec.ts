@@ -1,16 +1,14 @@
 import { expect } from 'chai';
 import { image, controls } from './image';
 import { IInputs } from './generated/ManifestTypes';
-import * as init from '../setup-test';
-import { assert } from 'console';
 
 describe('image control tests', () => {
   let context: ComponentFramework.Context<IInputs>;
   let htmlDivElement: HTMLDivElement;
 
   beforeEach(() => {
-    init.setup();
-    htmlDivElement = document.getElementById('div-main') as HTMLDivElement;
+    htmlDivElement = document.createElement('div') as HTMLDivElement;
+    document.body.appendChild(htmlDivElement);
     context = {} as ComponentFramework.Context<IInputs>;
   });
 

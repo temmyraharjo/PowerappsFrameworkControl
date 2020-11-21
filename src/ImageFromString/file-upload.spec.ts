@@ -1,15 +1,15 @@
 import { expect } from 'chai';
 import { fileUpload, controls } from './file-upload';
 import { IInputs } from './generated/ManifestTypes';
-import * as init from '../setup-test';
 
 describe('fileupload control tests', () => {
   let context: ComponentFramework.Context<IInputs>;
   let htmlDivElement: HTMLDivElement;
 
   beforeEach(() => {
-    init.setup();
-    htmlDivElement = document.getElementById('div-main') as HTMLDivElement;
+    htmlDivElement = document.createElement('div') as HTMLDivElement;
+    document.body.appendChild(htmlDivElement);
+    
     context = {} as ComponentFramework.Context<IInputs>;
   });
 
@@ -45,11 +45,11 @@ describe('fileupload control tests', () => {
       expect(information?.style.display).to.equal('block');
     });
 
-    it('can call convertToBase64', async () => {
+    it('can transform Blob to Base64String', async () => {
+      const blob = new Blob(['a'.repeat(1024)], {type: 'image/jpg'});
       const file = new fileUpload(context, htmlDivElement, () => { });
-      await file.convertToBase64({}).then(success => {
-        expect(success).to.equal('call-from-mock-file-reader');
-      });
-    });
+      const result = await file.convertToBase64(blob);
+      expect(result).to.not.null;
+    })
   });
 });

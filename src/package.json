@@ -7,7 +7,7 @@
         "clean": "pcf-scripts clean",
         "rebuild": "pcf-scripts rebuild",
         "start": "pcf-scripts start",
-        "test": "mocha -r ts-node/register './setup-test.ts' 'ImageFromString/**/*.spec.ts'"
+        "test": "karma start karma.conf.js"
     },
     "dependencies": {
         "@types/node": "^10.12.18",
@@ -15,10 +15,14 @@
     },
     "devDependencies": {
         "@types/chai": "^4.2.14",
-        "@types/jsdom": "^16.2.5",
         "@types/mocha": "^8.0.4",
         "chai": "^4.2.0",
-        "jsdom": "^16.4.0",
+        "karma": "^5.2.3",
+        "karma-chai": "^0.1.0",
+        "karma-cli": "^2.0.0",
+        "karma-firefox-launcher": "^2.1.0",
+        "karma-mocha": "^2.0.1",
+        "karma-typescript": "^5.2.0",
         "mocha": "^8.2.1",
         "pcf-scripts": "^1",
         "pcf-start": "^1",
