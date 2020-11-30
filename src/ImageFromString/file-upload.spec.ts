@@ -9,7 +9,7 @@ describe('fileupload control tests', () => {
   beforeEach(() => {
     htmlDivElement = document.createElement('div') as HTMLDivElement;
     document.body.appendChild(htmlDivElement);
-    
+
     context = {} as ComponentFramework.Context<IInputs>;
   });
 
@@ -35,7 +35,9 @@ describe('fileupload control tests', () => {
       const information = document.getElementById(controls.information);
       expect(information).not.null;
     });
+  });
 
+  describe('submit button', () => {
     it('can validate control', () => {
       const file = new fileUpload(context, htmlDivElement, () => { });
       file.generate();
@@ -46,10 +48,26 @@ describe('fileupload control tests', () => {
     });
 
     it('can transform Blob to Base64String', async () => {
-      const blob = new Blob(['a'.repeat(1024)], {type: 'image/jpg'});
+      const blob = new Blob(['a'.repeat(1024)], { type: 'image/jpg' });
       const file = new fileUpload(context, htmlDivElement, () => { });
       const result = await file.convertToBase64(blob);
       expect(result).to.not.null;
-    })
+    });
+
+    it('can set input-file to empty', async () => {
+      const file = new fileUpload(context, htmlDivElement, () => { });
+      file.generate();
+      const input = document.getElementById(controls.file) as HTMLInputElement;
+      input.setAttribute('value', __dirname + 'img/sample.jpg');
+      file.clearFile();
+      expect(input.getAttribute('value')).to.equal('');
+    });
+
+    it('can reduce the size of the image', async () => {
+      const base64Image = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+      const file = new fileUpload(context, htmlDivElement, () => { });
+      const resize = await file.resize(base64Image);
+      expect(resize).to.not.null;
+    });
   });
 });

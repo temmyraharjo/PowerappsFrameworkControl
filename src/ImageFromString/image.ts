@@ -18,6 +18,7 @@ export class image {
         maindiv.appendChild(this.getImage());
 
         this.htmlDivElement.appendChild(maindiv);
+        this.setVisible();
     }
 
     getImage() {
@@ -31,5 +32,17 @@ export class image {
     setSrc(imageString: string | ArrayBuffer) {
         const image = document.getElementById(controls.image) as HTMLImageElement;
         image.setAttribute('src', imageString as string);
+
+        this.setVisible();
+    }
+
+    setVisible() {
+        const image = document.getElementById(controls.image) as HTMLImageElement;
+        const imageClass = [
+            'img-fluid',
+            (image.src.indexOf('data:') > -1 ? '' : 'd-none')
+        ].join(' ').trim();
+
+        image.setAttribute('class', imageClass);
     }
 }

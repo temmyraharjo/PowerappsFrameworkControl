@@ -1,4 +1,5 @@
 import { IInputs } from './generated/ManifestTypes';
+import { image } from './image';
 
 export const controls = Object.freeze({
   div: 'file-div',
@@ -80,8 +81,13 @@ export class fileUpload {
       return;
     }
 
-    const file = imageFile.files![0]; 
-    this.convertToBase64(file as Blob).then(success => this.successFn(success));
+    const file = imageFile.files![0];
+    this.convertToBase64(file as Blob).then(base64String => {
+      this.clearFile();
+      return this.resize(base64String);
+    }).then(resizeResult => {
+      return this.successFn(resizeResult)
+    });
   }
 
   convertToBase64(file: Blob): Promise<string | ArrayBuffer> {
@@ -98,5 +104,44 @@ export class fileUpload {
 
       fileReader.readAsDataURL(file);
     });
+  }
+
+  resize(base64String: string | ArrayBuffer): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const img = document.createElement('img');
+      const text = base64String.toString();
+      const filetype = text.split(';')[0].replace('data:', '');
+
+      const resizeFactor = 0.6;
+      img.onload = function () {
+        const canvas = document.createElement('canvas');
+        canvas.height = img.height;
+        canvas.width = img.width;
+        const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+        ctx.drawImage(img, 0, 0);
+        debugger;
+
+        const result = canvas.toDataURL(filetype, resizeFactor);
+        resolve(result);
+      }
+
+      img.onerror = function () {
+        reject(new DOMException("Problem resizing file image."));
+      }
+
+      img.src = text;
+    });
+  }
+
+  clearFile() {
+    const imageFile = document.getElementById(
+      controls.file
+    ) as HTMLInputElement;
+
+    imageFile.setAttribute('value', '');
+
+    if(imageFile.value) {
+      imageFile.value = '';
+    }
   }
 }

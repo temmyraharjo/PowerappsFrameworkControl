@@ -27,13 +27,24 @@ describe('image control tests', () => {
     });
 
     it('set src image', () => {
-        const img = new image(context, htmlDivElement);
-        img.generate();
+      const img = new image(context, htmlDivElement);
+      img.generate();
 
-        img.setSrc('http://localhost/img1.jpg');
+      img.setSrc('http://localhost/img1.jpg');
 
-        const imgCtrl = document.getElementById(controls.image) as HTMLImageElement;
-        expect(imgCtrl.src).to.equal('http://localhost/img1.jpg');
+      const imgCtrl = document.getElementById(controls.image) as HTMLImageElement;
+      expect(imgCtrl.src).to.equal('http://localhost/img1.jpg');
+    });
+
+    it('set visible image', () => {
+      const img = new image(context, htmlDivElement);
+      img.generate();
+      const imgCtrl = document.getElementById(controls.image) as HTMLImageElement;
+      imgCtrl.src = '#';
+
+      img.setVisible();
+      const imgClass = imgCtrl.getAttribute('class') || '';
+      expect(imgClass.indexOf('d-none') > 0).to.be.true;
     });
   });
 });
