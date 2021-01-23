@@ -24,6 +24,7 @@
         "karma-cli": "^2.0.0",
         "karma-firefox-launcher": "^2.1.0",
         "karma-mocha": "^2.0.1",
+        "karma-spec-reporter": "0.0.32",
         "karma-typescript": "^5.2.0",
         "mocha": "^8.2.1",
         "pcf-scripts": "^1",

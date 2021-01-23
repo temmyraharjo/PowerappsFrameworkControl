@@ -12,3 +12,5 @@
 # msbuild output directories
 /src/bin
 /src/obj
+
+**/*.log
